@@ -242,4 +242,82 @@ router.get('/endpoint15', async (req, res) => {
     }
 });
 
+router.get('/endpoint16', async (req, res) => {
+    try {
+        const client = new MongoClient(bases);
+        await client.connect();
+        const db = client.db(nombreBase);
+        const collection = db.collection('chefs');
+        const result = await collection.countDocuments();
+        res.json({ count: result });
+        client.close();
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+
+router.get('/endpoint17', async (req, res) => {
+    try {
+        const client = new MongoClient(bases);
+        await client.connect();
+        const db = client.db(nombreBase);
+        const collection = db.collection('categorias');
+        const result = await collection.find({ descripcion: { $regex: /gourmet/i } }).toArray();
+        res.json(result);
+        client.close();
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+
+router.delete('/endpoint18', async (req, res) => {
+    try {
+        const client = new MongoClient(bases);
+        await client.connect();
+        const db = client.db(nombreBase);
+        const collection = db.collection('hamburguesas');
+        const result = await collection.deleteMany({ $expr: { $lt: [{ $size: "$ingredientes" }, 5] } });
+        res.json(result);
+        client.close();
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+
+router.post('/cendpoint19', async (req, res) => {
+    try {
+        const client = new MongoClient(bases);
+        await client.connect();
+        const db = client.db(nombreBase);
+        const nuevoChef = {
+            nombre: 'ChefD',
+            especialidad: 'Cocina Asiática'
+        };
+        const collection = db.collection('chefs');
+        const result = await collection.insertOne(nuevoChef);
+        res.json(result);
+        client.close();
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
+
+router.get('/endpoint20', async (req, res) => {
+    try {
+        const client = new MongoClient(bases);
+        await client.connect();
+        const db = client.db(nombreBase);
+        const collection = db.collection('hamburguesas');
+        const result = await collection.find().sort({ precio: 1 }).toArray();
+        res.json(result);
+        client.close();
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+
 module.exports = router;
