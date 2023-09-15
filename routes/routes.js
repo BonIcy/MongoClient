@@ -57,13 +57,13 @@ router.get('/endpoint3', async (req, res) => {
     }
 })
 
-router.put('/endpoint4', async (req, res) => {
+router.get('/endpoint4', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
         const db = client.db(nombreBase)
         const collection = db.collection('ingredientes');
-        const result = await collection.updateMany({}, { $inc : { precio: 1.5 }}).toArray() // $inc es un operador de actualización en mongo usado para incrementar (multiplicar)
+        const result = await collection.updateMany({}, { $mul : { precio: 1.5 }}) // $mul es un operador de actualización en mongo usado para multiplicar
         res.json(result);
         client.close
         } catch (error) {
@@ -99,7 +99,7 @@ router.get('/endpoint6', async (req, res) => {
     }
 })
 
-router.delete('/endpoint7', async (req, res) => {
+router.get('/endpoint7', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -113,7 +113,7 @@ router.delete('/endpoint7', async (req, res) => {
     }
 })
 
-router.post('/endpoint8', async (req, res) => {
+router.get('/endpoint8', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -197,7 +197,7 @@ router.get('/endpoint12', async (req, res) => {
 });
 
 
-router.put('/endpoint13', async (req, res) => {
+router.get('/endpoint13', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -220,7 +220,7 @@ router.get('/endpoint14', async (req, res) => {
         await client.connect();
         const db = client.db(nombreBase);
         const collection = db.collection('ingredientes');
-        const result = await collection.find({ descripcion: { $regex: /clasico/i } }).toArray(); // $regex permite buscar documentos cuyo campo cumpla con una expresión regular específica (lo que esta dentro de los slash /clasico/). la 'i' al final es para omitir mayusculas o minusculas y que estas no afecten la busqueda
+        const result = await collection.find({ descripcion: { $regex: /clásico/i } }).toArray(); // $regex permite buscar documentos cuyo campo cumpla con una expresión regular específica (lo que esta dentro de los slash /clasico/). la 'i' al final es para omitir mayusculas o minusculas y que estas no afecten la busqueda
         res.json(result);
         client.close();
     } catch (error) {
@@ -273,7 +273,7 @@ router.get('/endpoint17', async (req, res) => {
 });
 
 
-router.delete('/endpoint18', async (req, res) => {
+router.get('/endpoint18', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -291,7 +291,7 @@ router.delete('/endpoint18', async (req, res) => {
 });
 
 
-router.post('/endpoint19', async (req, res) => {
+router.get('/endpoint19', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -338,7 +338,7 @@ router.get('/endpoint21', async (req, res) => {
 });
 
 
-router.put('/endpoint22', async (req, res) => {
+router.get('/endpoint22', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -384,7 +384,7 @@ router.get('/endpoint24', async (req, res) => {
 });
 
 
-router.put('/endpoint25', async (req, res) => {
+router.get('/endpoint25', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -432,7 +432,7 @@ router.get('/endpoint27', async (req, res) => {
 });
 
 
-router.post('/endpoint28', async (req, res) => {
+router.get('/endpoint28', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
@@ -449,7 +449,7 @@ router.post('/endpoint28', async (req, res) => {
     }
 });
 
-router.delete('/endpoint29', async (req, res) => {
+router.get('/endpoint29', async (req, res) => {
     try {
         const client = new MongoClient(bases);
         await client.connect();
